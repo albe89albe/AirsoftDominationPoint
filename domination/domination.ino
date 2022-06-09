@@ -2,13 +2,16 @@
 #include <LiquidCrystal_I2C.h> // Library for LCD... https://sminghub.github.io/Sming/api/classLiquidCrystal__I2C.html
 
 int buzzer = 2;
-int btnA = 7;
-int btnB = 8;
+int btnA = 8;
+int btnB = 7;
 int led = 13;
 
-int gameDuration = 60 * 30; // Game duration in seconds (30 minutes)
+int gameTimeLeft = 60 * 30; // Game duration in seconds (30 minutes)
 int timeA = 0;  // Accumulated time of team alpha
 int timeB = 0;  // Accumulated time of team bravo
+
+bool dominationA = false; // True if team alpha is dominating
+bool dominationB = false; // True if team bravo is dominating
 
 // Wiring: SDA pin is connected to A4 and SCL pin to A5.
 // Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered)
@@ -43,7 +46,7 @@ String getFormattedTime(int totalSeconds){
 void showGameStatus() {
   lcd.clear();
   lcd.setCursor(5,0);
-  lcd.print( getFormattedTime(gameDuration) );
+  lcd.print( getFormattedTime(gameTimeLeft) );
   lcd.setCursor(0,1);
   lcd.print( getFormattedTime(timeA) );
   lcd.setCursor(11,1);
@@ -53,15 +56,20 @@ void showGameStatus() {
 void loop() {
 
   if( digitalRead(btnA) == LOW ) {
-    tone(buzzer, 1000);
+    dominationA = true;
+    dominationB = false;
+    tone(buzzer, 250, 250);
     digitalWrite(led, HIGH);
   } else if ( digitalRead(btnB) == LOW ) {
-    tone(buzzer, 2000);
-    digitalWrite(led, HIGH);
-  } else {
-    noTone(buzzer);
-    digitalWrite(led, LOW);
+    dominationA = false;
+    dominationB = true;
+    tone(buzzer, 250, 250);
   }
 
-  
+  // At the end of each loop wait one second and update the counters
+  delay(1000);
+  gameTimeLeft--;
+  if (dominationA) timeA++;
+  if (dominationB) timeB++;
+  showGameStatus();
 }
