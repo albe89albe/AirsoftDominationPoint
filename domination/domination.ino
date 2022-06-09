@@ -12,7 +12,7 @@ LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4)
 void setup() {
   // Initiate the LCD:
   lcd.init();
-  lcd.backlight();
+  //lcd.backlight();
 }
 
 void loop() {
@@ -21,4 +21,8 @@ void loop() {
   lcd.print("00:00"); // Print the string "Hello World!"
   lcd.setCursor(0, 1); //Set the cursor on the third column and the second row (counting starts at 0!).
   lcd.print("00:00 A  B 00:00");
+  delay(1000);
+  lcd.backlight();
+  delay(1000);
+  lcd.noBacklight();
 }
