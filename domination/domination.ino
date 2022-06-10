@@ -143,8 +143,12 @@ void showGameResult() {
   lcd.print("GANADOR: " + winner);
   
   while(true) {
-    tone(buzzer, 2000, 500);
-    tone(buzzer, 4000, 500);
+    tone(buzzer, 2000);
+    delay(500);
+    noTone(buzzer);
+    tone(buzzer, 4000);
+    delay(500);
+    noTone(buzzer);
   }
 }
 
