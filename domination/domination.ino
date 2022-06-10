@@ -87,9 +87,9 @@ void initialSetup(){
   // Request user to set the game type
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("A: Duracion fija");
+  lcd.print("A: TIEMPO");
   lcd.setCursor(0,1);
-  lcd.print("B: Dominacion");
+  lcd.print("B: DOMINACION");
   // User input is game type
   int userInput = 0;
   while(userInput != 1 && userInput != 2) {
@@ -100,7 +100,7 @@ void initialSetup(){
   // Request user to set game time
   lcd.clear();
   lcd.setCursor(0,0);
-  String msg = gameType == 1 ? "Tiempo max" : "Objetivo";
+  String msg = gameType == 1 ? "TIEMPO MAX" : "OBJETIVO";
   lcd.print(msg);
 
   bool setupDone = false;
@@ -125,6 +125,29 @@ void initialSetup(){
   }
 }
 
+bool isGameOver() {
+  
+  if(gameType == 1) {
+    if(gameTime <= 0) return true;
+  }
+  
+  return false;
+}
+
+void showGameResult() {
+  String winner = timeA > timeB ? "A" : "B";
+  lcd.clear();
+  lcd.setCursor(1,0);
+  lcd.print("FIN DE PARTIDA");
+  lcd.setCursor(3,1);
+  lcd.print("GANADOR: " + winner);
+  
+  while(true) {
+    tone(buzzer, 2000, 500);
+    tone(buzzer, 4000, 500);
+  }
+}
+
 void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(btnA, INPUT_PULLUP);
@@ -135,26 +158,35 @@ void setup() {
   lcd.init();
   lcd.backlight();
   initialSetup();
-  
 }
 
 void loop() {
 
+  // show game status in LCD
+  showGameStatus();
+
   if( digitalRead(btnA) == LOW ) {
     dominationA = true;
     dominationB = false;
-    tone(buzzer, 250, 250);
+    tone(buzzer, 100, 200);
     digitalWrite(led, HIGH);
   } else if ( digitalRead(btnB) == LOW ) {
     dominationA = false;
     dominationB = true;
-    tone(buzzer, 250, 250);
+    tone(buzzer, 100, 200);
   }
 
   // At the end of each loop wait one second and update the counters
-  delay(1000);
-  gameTime--;
+  if (gameType == 1) gameTime--;  // gameTime only decreases if gameType is fixed duration
   if (dominationA) timeA++;
   if (dominationB) timeB++;
-  showGameStatus();
+
+  // Check if game is over
+  if( isGameOver() ) {
+    showGameResult();
+  }
+
+  // wait 1 second
+  delay(1000);
+  
 }
