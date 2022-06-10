@@ -166,9 +166,6 @@ void setup() {
 
 void loop() {
 
-  // show game status in LCD
-  showGameStatus();
-
   if( digitalRead(btnA) == LOW ) {
     dominationA = true;
     dominationB = false;
@@ -184,6 +181,9 @@ void loop() {
   if (gameType == 1) gameTime--;  // gameTime only decreases if gameType is fixed duration
   if (dominationA) timeA++;
   if (dominationB) timeB++;
+
+  // show game status in LCD
+  showGameStatus();
 
   // Check if game is over
   if( isGameOver() ) {
