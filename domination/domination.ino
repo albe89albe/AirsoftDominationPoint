@@ -141,7 +141,9 @@ void initialSetup(){
 bool isGameOver() {
   
   if(gameType == 1) {
-    if(timeA > gameTime + timeB || timeB > gameTime + timeA ) return true;
+    if ( timeA > gameTime + timeB || timeB > gameTime + timeA ) return true;
+  } else if (gameType == 2) {
+    if ( timeA >= gameTime || timeB >= gameTime ) return true;
   }
   
   return false;
