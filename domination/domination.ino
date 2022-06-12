@@ -207,13 +207,17 @@ bool conqer(int teamButton) {
 void loop() {
 
   if( digitalRead(btnA) == LOW ) {
-    if ( conqer(btnA) ) {
+    if ( dominationA ) {
+      tone(buzzer, 100, 200);
+    } else if ( conqer(btnA) ) {
       dominationA = true;
       dominationB = false;
       tone(buzzer, 100, 200);
     }
   } else if ( digitalRead(btnB) == LOW ) {
-    if ( conqer(btnB) ) {
+    if ( dominationB ) {
+      tone(buzzer, 100, 200);
+    } else if ( conqer(btnB) ) {
       dominationA = false;
       dominationB = true;
       tone(buzzer, 100, 200);
