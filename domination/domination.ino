@@ -187,17 +187,37 @@ void setup() {
   initialSetup();
 }
 
+bool conqer(int teamButton) {
+  lcd.clear();
+  lcd.setCursor(2,0);
+  lcd.print("CONQUISTANDO");
+  int progress = 0;
+  while (digitalRead(teamButton) == LOW) {
+    lcd.setCursor(progress,1);
+    lcd.print("*");
+    tone(buzzer, 500, 100);
+    delay(400);
+    progress++;
+    if (progress == 16)
+      return true;
+  }
+  return false;
+}
+
 void loop() {
 
   if( digitalRead(btnA) == LOW ) {
-    dominationA = true;
-    dominationB = false;
-    tone(buzzer, 100, 200);
-    digitalWrite(led, HIGH);
+    if ( conqer(btnA) ) {
+      dominationA = true;
+      dominationB = false;
+      tone(buzzer, 100, 200);
+    }
   } else if ( digitalRead(btnB) == LOW ) {
-    dominationA = false;
-    dominationB = true;
-    tone(buzzer, 100, 200);
+    if ( conqer(btnB) ) {
+      dominationA = false;
+      dominationB = true;
+      tone(buzzer, 100, 200);
+    }
   }
 
   // At the end of each loop wait one second and update the counters
