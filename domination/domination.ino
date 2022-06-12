@@ -80,6 +80,13 @@ int getUserInput() {
   return userInput;
 }
 
+void errorTone() {
+  tone(buzzer, 250, 50);
+  delay(100);
+  tone(buzzer, 250, 50);
+  delay(100);
+}
+
 void initialSetup(){
   
   lcd.backlight();
@@ -111,10 +118,16 @@ void initialSetup(){
     int userInput = getUserInput();
     switch (userInput) {
       case 1:
-        gameTime -= 300;
+        if (gameTime > 300)
+          gameTime -= 300;
+        else
+          errorTone();
         break;
       case 2:
-        gameTime += 300;
+        if (gameTime < 30000)
+          gameTime += 300;
+        else
+          errorTone();
         break;
       case 3:
         setupDone = true;
@@ -161,6 +174,14 @@ void setup() {
   // Initiate the LCD:
   lcd.init();
   lcd.backlight();
+
+  // Triple beep to advise device is on
+  for(int i = 0; i < 3; i++) {
+    tone(buzzer, 5000, 50);
+    delay(100);
+  }
+
+  // Enter setup
   initialSetup();
 }
 
