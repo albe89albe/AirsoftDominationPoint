@@ -1,11 +1,15 @@
-#include <Wire.h> // Library for I2C communication
-#include <LiquidCrystal_I2C.h> // Library for LCD... https://sminghub.github.io/Sming/api/classLiquidCrystal__I2C.html
+// include the library code:
+#include <LiquidCrystal.h>
+
+// initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+const int rs = 13, en = 12, d4 = 11, d5 = 10, d6 = 9, d7 = 8;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // pin out
 int buzzer = 2;
-int btnA = 8;
-int btnB = 7;
-int led = 13;
+int btnA = 5;
+int btnB = 4;
 
 // global variables
 int gameTime = 60 * 30; // Game duration in seconds (30 minutes)
@@ -19,10 +23,6 @@ int gameType = 0; // Type of game
  * 1 - Fixed duration: given a maximum game lenght, each team fight to have the more time
  * 2 - Domain objective: each team fight to reach a given time goal
 */
-
-// Wiring: SDA pin is connected to A4 and SCL pin to A5.
-// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered)
-LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2); // Change to (0x27,20,4) for 20x4 LCD.
 
 String getFormattedTime(int totalSeconds){
   // Obtain minutes and seconds from the total amount of seconds
@@ -88,8 +88,6 @@ void errorTone() {
 }
 
 void initialSetup(){
-  
-  lcd.backlight();
 
   // Request user to set the game type
   lcd.clear();
@@ -171,11 +169,7 @@ void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(btnA, INPUT_PULLUP);
   pinMode(btnB, INPUT_PULLUP);
-  pinMode(led, OUTPUT);
-
-  // Initiate the LCD:
-  lcd.init();
-  lcd.backlight();
+  lcd.begin(16, 2);
 
   // Triple beep to advise device is on
   for(int i = 0; i < 3; i++) {
