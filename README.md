@@ -1,1 +1,16 @@
-# AirsoftDominationPoint
+# Punto de dominio
+
+Hola Legionario! :smiley:
+
+Este repositorio contiene el código para crear un punto de dominación con Arduino. Está probado con un Arduino Duemilanove, pero debe ser perfectamente compatible con un Arduino UNO.
+
+Hay dos códigos de ejemplo cuya diferencia es básicamente cómo se conecta la pantalla, si por conexión paralelo de forma directa, o a través de un driver i2c.
+
+La explicación detallada de cada caso está en su carpeta:
+
+- [Pantalla conectada directamente](domination_direct_lcd/README.md)
+- [Pantalla conectada condriver i2c](domination_i2c_lcd/README.md)
+
+*Nos vemos en el campo de batalla!* 
+
+:stuck_out_tongue_winking_eye:

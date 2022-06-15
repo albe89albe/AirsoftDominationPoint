@@ -1,29 +1,33 @@
-// include the library code:
+// Librería para trabajo con la pantalla
 #include <LiquidCrystal.h>
 
-// initialize the library by associating any needed LCD interface pin
-// with the arduino pin number it is connected to
+// Inicializamos la pantalla
 const int rs = 13, en = 12, d4 = 11, d5 = 10, d6 = 9, d7 = 8;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
-// pin out
+// Pin out
 int buzzer = 2;
 int btnA = 5;
 int btnB = 4;
 
-// global variables
-int gameTime = 60 * 30; // Game duration in seconds (30 minutes)
-int timeA = 0;  // Accumulated time of team alpha
-int timeB = 0;  // Accumulated time of team bravo
-bool dominationA = false; // True if team alpha is dominating
-bool dominationB = false; // True if team bravo is dominating
-int gameType = 0; // Type of game
+// Variables globales
+int gameTime = 60 * 30; // Duración por defecto del juego (30 minutos)
+int timeA = 0;  // Tiempo acumulado por el equipo Alpha
+int timeB = 0;  // Tiempo acumulado por el equipo Bravo
+bool dominationA = false; // True si el equipo Alpha está dominando
+bool dominationB = false; // True si el equipo Bravo está dominando
+int gameType = 0; // Tipo de juego
 /*
- * Game types:
- * 1 - Fixed duration: given a maximum game lenght, each team fight to have the more time
- * 2 - Domain objective: each team fight to reach a given time goal
+ * Tipos de juego:
+ * 1 - TIEMPO: Durante un tiempo determinado, ver qué equipo domina más
+ * 2 - DOMINACION: Ver qué equipo es el primero en conseguir dominar un tiempo determinado
 */
 
+/**
+ * String getFormattedTime(int totalSeconds)
+ * 
+ * Recibe como argumento un entero que es la cantidad de segundos y devuelve un string de la forma "MM:SS"
+ */
 String getFormattedTime(int totalSeconds){
   // Obtain minutes and seconds from the total amount of seconds
   int minutes = totalSeconds / 60;
@@ -37,6 +41,11 @@ String getFormattedTime(int totalSeconds){
   return strMin + ":" + strSec;
 }
 
+/**
+ * void showGameStatus()
+ * 
+ * Presenta en pantalla el estado actual de los contadores del juego
+ */
 void showGameStatus() {
   lcd.clear();
   lcd.setCursor(5,0);
@@ -47,6 +56,14 @@ void showGameStatus() {
   lcd.print( getFormattedTime(timeB) );
 }
 
+/**
+ * int getUserInput()
+ * 
+ * Espera a que el usuario presione un botón y devuelve qué botón ha presionado:
+ * 1 - BtnA
+ * 2 - BtnB
+ * 3 - Ambos a la vez
+ */
 int getUserInput() {
   int userInput = 0;
   while(true) {
@@ -80,6 +97,11 @@ int getUserInput() {
   return userInput;
 }
 
+/**
+ * void errorTone()
+ * 
+ * Reproduce un par de tonos graves seguidos en el buzzer que transmiten la idea de que ha ocurrido un error
+ */
 void errorTone() {
   tone(buzzer, 250, 50);
   delay(100);
@@ -87,7 +109,12 @@ void errorTone() {
   delay(100);
 }
 
-void initialSetup(){
+/**
+ * void initialSetup()
+ * 
+ * Gestiona el setup inicial donde se establece el tipo de partida y el tiempo que va a durar
+ */
+void initialSetup() {
 
   // Request user to set the game type
   lcd.clear();
@@ -136,6 +163,12 @@ void initialSetup(){
   }
 }
 
+/**
+ * bool isGameOver()
+ * 
+ * Comprueba el estado actual del juego y el tipo de juego para definir si ya se ha terminado.
+ * Devuelve true si el juego ha terminado.
+ */
 bool isGameOver() {
   
   if(gameType == 1) {
@@ -147,6 +180,11 @@ bool isGameOver() {
   return false;
 }
 
+/**
+ * void showGameResult()
+ * 
+ * Pita fin de partida y presenta el equipo ganador en pantalla
+ */
 void showGameResult() {
   String winner = timeA > timeB ? "A" : "B";
   lcd.clear();
@@ -165,22 +203,11 @@ void showGameResult() {
   }
 }
 
-void setup() {
-  pinMode(buzzer, OUTPUT);
-  pinMode(btnA, INPUT_PULLUP);
-  pinMode(btnB, INPUT_PULLUP);
-  lcd.begin(16, 2);
-
-  // Triple beep to advise device is on
-  for(int i = 0; i < 3; i++) {
-    tone(buzzer, 5000, 50);
-    delay(100);
-  }
-
-  // Enter setup
-  initialSetup();
-}
-
+/**
+ * bool conqer(int teamButton)
+ * 
+ * Proceso de conquista del punto. Devuelve true si el punto fue conquistado
+ */
 bool conqer(int teamButton) {
   lcd.clear();
   lcd.setCursor(2,0);
@@ -198,8 +225,41 @@ bool conqer(int teamButton) {
   return false;
 }
 
+/**
+ * void setup()
+ * 
+ * Punto de entrada al programa
+ */
+void setup() {
+  
+  // Pin del buzzer como salida
+  pinMode(buzzer, OUTPUT);
+
+  // Se configuran con resistores de pull-up internos los pines por donde se atiende a los botones
+  pinMode(btnA, INPUT_PULLUP);
+  pinMode(btnB, INPUT_PULLUP);
+  
+  // Inicialización de LCD
+  lcd.begin(16, 2);
+
+  // Tres beeps para anunciar que el dispositivo se ha encendido
+  for(int i = 0; i < 3; i++) {
+    tone(buzzer, 5000, 50);
+    delay(100);
+  }
+
+  // Cargamos el menú inicial
+  initialSetup();
+}
+
+/**
+ * void loop()
+ * 
+ * Ciclo eterno de ejecución
+ */
 void loop() {
 
+  // Comprobar si se está presionando algún botón
   if( digitalRead(btnA) == LOW ) {
     if ( dominationA ) {
       tone(buzzer, 100, 200);
@@ -218,20 +278,20 @@ void loop() {
     }
   }
 
-  // At the end of each loop wait one second and update the counters
-  if (gameType == 1) gameTime--;  // gameTime only decreases if gameType is fixed duration
+  // Actualiza los contadores
+  if (gameType == 1) gameTime--;  // El tiempo del juego solo se decrementa si el tipo de juego es TIEMPO
   if (dominationA) timeA++;
   if (dominationB) timeB++;
 
-  // show game status in LCD
+  // Mostrar el estado de los contadores en pantalla
   showGameStatus();
 
-  // Check if game is over
+  // Comprobar si el juego ha terminado
   if( isGameOver() ) {
     showGameResult();
   }
 
-  // wait 1 second
+  // Espera un segundo para la próxima iteración
   delay(1000);
   
 }
