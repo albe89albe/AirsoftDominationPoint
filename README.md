@@ -9,7 +9,7 @@ Hay dos códigos de ejemplo cuya diferencia es básicamente cómo se conecta la 
 La explicación detallada de cada caso está en su carpeta:
 
 - [Pantalla conectada directamente](domination_direct_lcd/README.md)
-- [Pantalla conectada condriver i2c](domination_i2c_lcd/README.md)
+- [Pantalla conectada con driver i2c](domination_i2c_lcd/README.md)
 
 *Nos vemos en el campo de batalla!* 
 
