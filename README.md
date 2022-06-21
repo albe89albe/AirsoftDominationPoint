@@ -16,7 +16,7 @@ En general si te ha parecido útil, o quieres alegrarme el día, puedes pasar po
 
 ## Código
 
-Puedes descargarte el código o darle un vistazo, tiene los comentarios en español y está hecho de una forma que considero bastante legible. El código recibirá mejoras, pero siempre contando con que el hardware no cambie, así que cuando te quieras montar el proyecto, simplemente descárgate la última versión, o si ya lo tienes montado con una versión anterior, siempre será seguro actualizar a la última versión. La compatibilidad con versiones anteriores se mantendrá siempre.
+Puedes [descargarte el código](https://github.com/albe89albe/AirsoftDominationPoint/archive/refs/heads/main.zip) o [darle un vistazo](AirsoftDominationPoint.ino), tiene los comentarios en español y está hecho de una forma que considero bastante legible. El código recibirá mejoras, pero siempre contando con que el hardware no cambie, así que cuando te quieras montar el proyecto, simplemente descárgate la última versión, o si ya lo tienes montado con una versión anterior, siempre será seguro actualizar a la última versión. La compatibilidad con versiones anteriores se mantendrá siempre.
 
 ## Lista de componentes
 
