@@ -3,7 +3,20 @@
 *Hola Legionario!*
 :smiley:
 
-Esta ayuda corresponde a la solución con la **pantalla conectada directamente**.
+Aquí encontrarás la documentación para poder hacerte un punto de dominación simple con Arduino. Este repositorio contiene:
+- La lista de componentes que necesitarás
+- Las forma en la que deben conectarse los componentes
+- El código que debe subirse al Arduino
+
+El proyecto fue realizado con un Arduino Duemilanove, pero es de esperar que funcione exactamente igual en un Arduino UNO.
+
+Si crees que algo se puede mejorar, puedes decírmelo en un issue de este repositorio, o a través de mi [Instagram](https://www.instagram.com/el_legionario_airsoft/).
+
+En general si te ha parecido útil, o quieres alegrarme el día, puedes pasar por mi canal de [YouTube](https://www.youtube.com/c/ElLegionario), suscribirte y dejarme algún comentario de esos que dan ganas de seguir haciendo estas cosas :blush:
+
+## Código
+
+Puedes [descargarte el código](https://github.com/albe89albe/AirsoftDominationPoint/archive/refs/heads/main.zip) o [darle un vistazo](AirsoftDominationPoint.ino), tiene los comentarios en español y está hecho de una forma que considero bastante legible. El código recibirá mejoras, pero siempre contando con que el hardware no cambie, así que cuando te quieras montar el proyecto, simplemente descárgate la última versión, o si ya lo tienes montado con una versión anterior, siempre será seguro actualizar a la última versión. La compatibilidad con versiones anteriores se mantendrá siempre.
 
 ## Lista de componentes
 
@@ -95,12 +108,6 @@ Simplemente nombre "1" y "2" a los terminales porque es indiferente
 Usa el IDE oficial para subir el código `AirsoftDominationPoint.ino` a tu Arduino. Recuerda que siempre te lo puedes descargar gratuitamente desde la [web de Arduino](https://www.arduino.cc/en/software).
 
 También si quieres puedes [darle un vistazo al código](AirsoftDominationPoint.ino).
-
-## Colaboración
-
-Si crees que algo se puede mejorar, puedes decírmelo en un issue de este repositorio, o a través de mi [Instagram](https://www.instagram.com/el_legionario_airsoft/).
-
-En general si te ha parecido útil, o quieres alegrarme el día, puedes pasar por mi canal de [YouTube](https://www.youtube.com/c/ElLegionario), suscribirte y dejarme algún comentario de esos que dan ganas de seguir haciendo estas cosas :blush:.
 
 *Nos vemos en el campo de batalla!* 
 :stuck_out_tongue_winking_eye:
