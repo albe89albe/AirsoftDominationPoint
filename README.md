@@ -18,6 +18,8 @@ En general si te ha parecido útil, o quieres alegrarme el día, puedes pasar po
 
 Puedes [descargarte el código](https://github.com/albe89albe/AirsoftDominationPoint/archive/refs/heads/main.zip) o [darle un vistazo](AirsoftDominationPoint.ino), tiene los comentarios en español y está hecho de una forma que considero bastante legible. El código recibirá mejoras, pero siempre contando con que el hardware no cambie, así que cuando te quieras montar el proyecto, simplemente descárgate la última versión, o si ya lo tienes montado con una versión anterior, siempre será seguro actualizar a la última versión. La compatibilidad con versiones anteriores se mantendrá siempre.
 
+Usa el IDE oficial para subir el código `AirsoftDominationPoint.ino` a tu Arduino. Recuerda que siempre te lo puedes descargar gratuitamente desde la [web de Arduino](https://www.arduino.cc/en/software).
+
 ## Lista de componentes
 
 1. Arduino (UNO o Duemilanove)
@@ -104,10 +106,8 @@ Simplemente nombre "1" y "2" a los terminales porque es indiferente
 2 - 4 (Arduino)
 ```
 
-## Código
-Usa el IDE oficial para subir el código `AirsoftDominationPoint.ino` a tu Arduino. Recuerda que siempre te lo puedes descargar gratuitamente desde la [web de Arduino](https://www.arduino.cc/en/software).
-
-También si quieres puedes [darle un vistazo al código](AirsoftDominationPoint.ino).
+Y eso es todo!
+--------------
 
 *Nos vemos en el campo de batalla!* 
 :stuck_out_tongue_winking_eye:
