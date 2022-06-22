@@ -21,14 +21,15 @@ Puedes [descargarte el código](https://github.com/albe89albe/AirsoftDominationP
 Usa el IDE oficial para subir el código `AirsoftDominationPoint.ino` a tu Arduino. Recuerda que siempre te lo puedes descargar gratuitamente desde la [web de Arduino](https://www.arduino.cc/en/software).
 
 ## Lista de componentes
-
-1. Arduino (UNO o Duemilanove)
-2. LCD 1602
-3. Botones (x2)
-4. Buzzer
-5. Interruptor simple
-6. Resistor de 220 &#x2126;
-7. Potenciómetro de 10 k&#x2126;
+(Con su enlace a AliExpress)
+1. [Arduino (UNO o Duemilanove)](https://a.aliexpress.com/_vtPUpc)
+2. [LCD 1602](https://a.aliexpress.com/_u8qkKa)
+3. [Botones (x2)](https://a.aliexpress.com/_uA1KFU)
+4. [Buzzer](https://a.aliexpress.com/_uWV2no)
+5. [Interruptor simple](https://a.aliexpress.com/_u8kcRY)
+6. [Resistor de 220 &#x2126;](https://a.aliexpress.com/_u7olW2)
+7. [Potenciómetro de 10 k&#x2126;](https://a.aliexpress.com/_v5eEvk)
+8. [Conectores T-Dean](https://a.aliexpress.com/_v3uch8)
 
 No contaré cables, placas, herramientas y consumibles, solo componentes y sus conexiones.
 
