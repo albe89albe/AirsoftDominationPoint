@@ -17,6 +17,7 @@ int timeB = 0;  // Tiempo acumulado por el equipo Bravo
 bool dominationA = false; // True si el equipo Alpha está dominando
 bool dominationB = false; // True si el equipo Bravo está dominando
 int gameType = 0; // Tipo de juego
+long currentMillis; // Milisegundos transcurridos actuales
 /*
  * Tipos de juego:
  * 1 - TIEMPO: Durante un tiempo determinado, ver qué equipo domina más
@@ -250,6 +251,8 @@ void setup() {
 
   // Cargamos el menú inicial
   initialSetup();
+
+  currentMillis = millis(); //Obtener los milisegundos transcurridos actuales
 }
 
 /**
@@ -278,20 +281,23 @@ void loop() {
     }
   }
 
-  // Actualiza los contadores
-  if (gameType == 1) gameTime--;  // El tiempo del juego solo se decrementa si el tipo de juego es TIEMPO
-  if (dominationA) timeA++;
-  if (dominationB) timeB++;
+  // Si ya pasó un segundo...
+  if (millis() - currentMillis > 1000) {
+    //Actualiza el valor de milisegundos actual
+    currentMillis = millis();
 
-  // Mostrar el estado de los contadores en pantalla
-  showGameStatus();
+    // Actualiza los contadores
+    if (gameType == 1) gameTime--;  // El tiempo del juego solo se decrementa si el tipo de juego es TIEMPO
+    if (dominationA) timeA++;
+    if (dominationB) timeB++;
 
-  // Comprobar si el juego ha terminado
-  if( isGameOver() ) {
-    showGameResult();
+    // Mostrar el estado de los contadores en pantalla
+    showGameStatus();
+
+    // Comprobar si el juego ha terminado
+    if( isGameOver() ) {
+      showGameResult();
+    }
   }
 
-  // Espera un segundo para la próxima iteración
-  delay(1000);
-  
 }
