@@ -58,6 +58,17 @@ void showGameStatus() {
 }
 
 /**
+ * void showTakenPoint()
+ * 
+ * Presenta en pantalla un mensaje advirtiendo que el punto ya está tomado
+ */
+void showTakenPoint() {
+  lcd.clear();
+  lcd.setCursor(2,0);
+  lcd.print( "PUNTO TOMADO" );
+}
+
+/**
  * int getUserInput()
  * 
  * Espera a que el usuario presione un botón y devuelve qué botón ha presionado:
@@ -264,25 +275,52 @@ void loop() {
 
   // Comprobar si se está presionando algún botón
   if( digitalRead(btnA) == LOW ) {
+
+    // Están presionando A, comprobar si el punto es de A
     if ( dominationA ) {
-      tone(buzzer, 100, 200);
-    } else if ( conqer(btnA) ) {
+
+      // El punto es de A, avisemos que está tomado
+      tone(buzzer, 100);
+      showTakenPoint();
+
+      // No nos callamos hasta que suelten el botón
+      while( digitalRead(btnA) == LOW ){}
+      noTone(buzzer);
+
+    } else if ( conqer(btnA) ) {  // Intento de conquista de A
+
+      // A ha conquistado el punto
       dominationA = true;
       dominationB = false;
-      tone(buzzer, 100, 200);
+
     }
+
   } else if ( digitalRead(btnB) == LOW ) {
+
+    // Están presionando B, comprobar si el punto es de B
     if ( dominationB ) {
-      tone(buzzer, 100, 200);
-    } else if ( conqer(btnB) ) {
+
+      // El punto es de B, avisemos que está tomado
+      tone(buzzer, 100);
+      showTakenPoint();
+
+      // No nos callamos hasta que suelten el botón
+      while( digitalRead(btnB) == LOW ){}
+      noTone(buzzer);
+
+    } else if ( conqer(btnB) ) {// Intento de conquista de B
+
+      // B ha conquistado el punto
       dominationA = false;
       dominationB = true;
-      tone(buzzer, 100, 200);
+
     }
+
   }
 
   // Si ya pasó un segundo...
   if (millis() - currentMillis > 1000) {
+
     //Actualiza el valor de milisegundos actual
     currentMillis = millis();
 
@@ -295,9 +333,8 @@ void loop() {
     showGameStatus();
 
     // Comprobar si el juego ha terminado
-    if( isGameOver() ) {
-      showGameResult();
-    }
+    if( isGameOver() ) showGameResult();
+
   }
 
 }
