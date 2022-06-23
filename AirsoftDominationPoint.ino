@@ -17,6 +17,7 @@ int timeB = 0;  // Tiempo acumulado por el equipo Bravo
 bool dominationA = false; // True si el equipo Alpha está dominando
 bool dominationB = false; // True si el equipo Bravo está dominando
 int gameType = 0; // Tipo de juego
+long currentMillis; // Milisegundos transcurridos actuales
 /*
  * Tipos de juego:
  * 1 - TIEMPO: Durante un tiempo determinado, ver qué equipo domina más
@@ -54,6 +55,17 @@ void showGameStatus() {
   lcd.print( getFormattedTime(timeA) );
   lcd.setCursor(11,1);
   lcd.print( getFormattedTime(timeB) );
+}
+
+/**
+ * void showTakenPoint()
+ * 
+ * Presenta en pantalla un mensaje advirtiendo que el punto ya está tomado
+ */
+void showTakenPoint() {
+  lcd.clear();
+  lcd.setCursor(2,0);
+  lcd.print( "PUNTO TOMADO" );
 }
 
 /**
@@ -250,6 +262,8 @@ void setup() {
 
   // Cargamos el menú inicial
   initialSetup();
+
+  currentMillis = millis(); //Obtener los milisegundos transcurridos actuales
 }
 
 /**
@@ -261,37 +275,66 @@ void loop() {
 
   // Comprobar si se está presionando algún botón
   if( digitalRead(btnA) == LOW ) {
+
+    // Están presionando A, comprobar si el punto es de A
     if ( dominationA ) {
-      tone(buzzer, 100, 200);
-    } else if ( conqer(btnA) ) {
+
+      // El punto es de A, avisemos que está tomado
+      tone(buzzer, 100);
+      showTakenPoint();
+
+      // No nos callamos hasta que suelten el botón
+      while( digitalRead(btnA) == LOW ){}
+      noTone(buzzer);
+
+    } else if ( conqer(btnA) ) {  // Intento de conquista de A
+
+      // A ha conquistado el punto
       dominationA = true;
       dominationB = false;
-      tone(buzzer, 100, 200);
+
     }
+
   } else if ( digitalRead(btnB) == LOW ) {
+
+    // Están presionando B, comprobar si el punto es de B
     if ( dominationB ) {
-      tone(buzzer, 100, 200);
-    } else if ( conqer(btnB) ) {
+
+      // El punto es de B, avisemos que está tomado
+      tone(buzzer, 100);
+      showTakenPoint();
+
+      // No nos callamos hasta que suelten el botón
+      while( digitalRead(btnB) == LOW ){}
+      noTone(buzzer);
+
+    } else if ( conqer(btnB) ) {// Intento de conquista de B
+
+      // B ha conquistado el punto
       dominationA = false;
       dominationB = true;
-      tone(buzzer, 100, 200);
+
     }
+
   }
 
-  // Actualiza los contadores
-  if (gameType == 1) gameTime--;  // El tiempo del juego solo se decrementa si el tipo de juego es TIEMPO
-  if (dominationA) timeA++;
-  if (dominationB) timeB++;
+  // Si ya pasó un segundo...
+  if (millis() - currentMillis > 1000) {
 
-  // Mostrar el estado de los contadores en pantalla
-  showGameStatus();
+    //Actualiza el valor de milisegundos actual
+    currentMillis = millis();
 
-  // Comprobar si el juego ha terminado
-  if( isGameOver() ) {
-    showGameResult();
+    // Actualiza los contadores
+    if (gameType == 1) gameTime--;  // El tiempo del juego solo se decrementa si el tipo de juego es TIEMPO
+    if (dominationA) timeA++;
+    if (dominationB) timeB++;
+
+    // Mostrar el estado de los contadores en pantalla
+    showGameStatus();
+
+    // Comprobar si el juego ha terminado
+    if( isGameOver() ) showGameResult();
+
   }
 
-  // Espera un segundo para la próxima iteración
-  delay(1000);
-  
 }
