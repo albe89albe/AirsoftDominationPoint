@@ -36,76 +36,19 @@ No contaré cables, placas, herramientas y consumibles, solo componentes y sus c
 ## Conexiones
 Esta será la faena complicada para montar este proyecto. Haz uso como entiendas del cableado y de las placas u otras cosas que tengas para conseguir las conexiones que se describen a continuación. Recuerda proteger al máximo de la posibilidad de que terminales que no se deban tocar, se toquen. o sea, asegúrate de usar termoretráctil o cinta aislante donde sea necesario. Si dos cables que no se deben tocar, se tocan, puede no funcionar bien, pero puedes también cargarte algo.
 
-A continuación tienes a qué debe estar conectado cada terminal desde el punto de vista de cada componente:
-### Desde el Arduino
-Solamente se usarán los pines de I/O digitales
-```
-Aref -
- GND -
-  13 - Rs (LCD)
-  12 - E (LCD)
-  11 - D4 (LCD)
-  10 - D5 (LCD)
-   9 - D6 (LCD)
-   8 - D7 (LCD)
-   7 -
-   6 -
-   5 - BtnA
-   4 - BtnB
-   3 -
-   2 - P (Buzzer)
-   1 -
-```
-### Desde la pantalla
-```
-Vss - GND
-Vdd - 5V
- Vo - B (Potenciómetro)
- Rs - 13 (Arduino)
- Rw - GND
-  E - 12 (Arduino)
- D0 -
- D1 -
- D2 -
- D3 -
- D4 - 11 (Arduino)
- D5 - 10 (Arduino)
- D6 -  9 (Arduino)
- D7 -  8 (Arduino)
-  A - Resistor - 5V
-  K - GND
-```
-### Desde el buzzer
-En realidad no importa qué cable va donde, solo que uno esté a masa y el otro al pin del Arduino
-```
-N - GND
-P - 2 (Arduino)
-```
-### Desde el potenciómetro
-El terminal B o "base" es en el que la resistencia varía cuando se manipula el potenciómetro, entre los terminales A y B debe haber 10 k&#x2126;
-```
-A - 5V
-B - Vo (LCD)
-C - GND
-```
-### Desde el resistor
-Simplemente nombre "1" y "2" a los terminales porque es indiferente
-```
-1 - A (LCD)
-2 - 5V
-```
-### Desde BtnA
-Simplemente nombre "1" y "2" a los terminales porque es indiferente
-```
-1 - GND
-2 - 5 (Arduino)
-```
-### Desde BtnB
-Simplemente nombre "1" y "2" a los terminales porque es indiferente
-```
-1 - GND
-2 - 4 (Arduino)
-```
+El circuito que tienes que construir es este:
+![Circuito](img/schematic.png)
+
+Aquí tienes también las conexiones por separado con imágenes un poco más amigables.
+
+### Arduino - LCD
+![LCD](img/arduino-pantalla.png)
+
+### Arduino - botones
+![Botones](img/arduino-botones.png)
+
+### Arduino - buzzer
+![Buzzer](img/arduino-buzzer.png)
 
 Y eso es todo!
 --------------
