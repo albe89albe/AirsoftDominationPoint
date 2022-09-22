@@ -6,9 +6,18 @@ const int rs = 13, en = 12, d4 = 11, d5 = 10, d6 = 9, d7 = 8;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // Pin out
-int buzzer = 2;
-int btnA = 5;
-int btnB = 4;
+const int buzzer = 5;
+const int btnA = 4;
+const int btnB = 3;
+const int ledA = 7;
+const int ledB = 6;
+
+// Offset entre boton y led, asi se puede obtener el led asociado a cada boton sumando esto al pin del boton
+/*
+ * IMPORTANTE: Esto implica que hay que conectar de forma tal que:
+ * ledA - btnA = ledB - btnB
+*/
+const int btnLedOffset = ledA - btnA;
 
 // Variables globales
 int gameTime = 60 * 30; // Duración por defecto del juego (30 minutos)
@@ -228,6 +237,7 @@ bool conqer(int teamButton) {
   while (digitalRead(teamButton) == LOW) {
     lcd.setCursor(progress,1);
     lcd.print("*");
+    digitalWrite(teamButton + btnLedOffset, progress % 2);
     tone(buzzer, 500, 100);
     delay(400);
     progress++;
@@ -250,6 +260,10 @@ void setup() {
   // Se configuran con resistores de pull-up internos los pines por donde se atiende a los botones
   pinMode(btnA, INPUT_PULLUP);
   pinMode(btnB, INPUT_PULLUP);
+
+  // Se configuran los leds como salidas
+  pinMode(ledA, OUTPUT);
+  pinMode(ledB, OUTPUT);
   
   // Inicialización de LCD
   lcd.begin(16, 2);
@@ -326,8 +340,18 @@ void loop() {
 
     // Actualiza los contadores
     if (gameType == 1) gameTime--;  // El tiempo del juego solo se decrementa si el tipo de juego es TIEMPO
-    if (dominationA) timeA++;
-    if (dominationB) timeB++;
+    if (dominationA) {
+      timeA++;
+      digitalWrite(ledA, HIGH);
+      digitalWrite(ledB, LOW);
+    } else if (dominationB) {
+      timeB++;
+      digitalWrite(ledA, LOW);
+      digitalWrite(ledB, HIGH);
+    } else {
+      digitalWrite(ledA, LOW);
+      digitalWrite(ledB, LOW);
+    }
 
     // Mostrar el estado de los contadores en pantalla
     showGameStatus();
