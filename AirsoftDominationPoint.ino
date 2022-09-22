@@ -267,6 +267,53 @@ bool conqer(int teamButton) {
 }
 
 /**
+ * void diagnose()
+ * 
+ * Ejecuta diagnostico de los perifericos
+ */
+void diagnose() {
+  lcd.clear();
+  lcd.setCursor(2,0);
+  lcd.print("DIAGNOSTICO");
+
+  lcd.setCursor(0,1);
+  lcd.print("<---- LED_A");
+  for(int i = 0; i < 7; i++) {
+    digitalWrite(ledA, i%2);
+    delay(500);
+  }
+
+  lcd.setCursor(0,1);
+  lcd.print("     LED_B ---->");
+  for(int i = 0; i < 7; i++) {
+    digitalWrite(ledB, i%2);
+    delay(500);
+  }
+
+  lcd.setCursor(0,1);
+  lcd.print("     BUZZER     ");
+  delay(100);
+  for(int i = 0; i < 5; i++) {
+    tone(buzzer, 4000);
+    delay(200);
+    noTone(buzzer);
+    delay(200);
+  }
+
+  lcd.setCursor(0,1);
+  lcd.print("<-- PRESIONA A  ");
+  while( digitalRead(btnA) == HIGH ) {}
+
+  lcd.setCursor(0,1);
+  lcd.print("  PRESIONA B -->");
+  while( digitalRead(btnB) == HIGH ) {}
+
+  lcd.setCursor(0,1);
+  lcd.print("   TERMINADO    ");
+  delay(1000);
+}
+
+/**
  * void setup()
  * 
  * Punto de entrada al programa
@@ -286,6 +333,9 @@ void setup() {
   
   // Inicialización de LCD
   lcd.begin(16, 2);
+
+  // Ejecutar diagnóstico
+  diagnose();
 
   // Tres beeps para anunciar que el dispositivo se ha encendido
   for(int i = 0; i < 3; i++) {
