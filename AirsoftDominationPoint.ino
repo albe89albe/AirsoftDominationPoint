@@ -215,9 +215,13 @@ void showGameResult() {
   lcd.print("GANADOR: " + winner);
   
   while(true) {
+    digitalWrite(ledA, HIGH);
+    digitalWrite(ledB, LOW);
     tone(buzzer, 2000);
     delay(500);
     noTone(buzzer);
+    digitalWrite(ledA, LOW);
+    digitalWrite(ledB, HIGH);
     tone(buzzer, 4000);
     delay(500);
     noTone(buzzer);
