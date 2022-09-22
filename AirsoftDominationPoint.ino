@@ -225,6 +225,21 @@ void showGameResult() {
     tone(buzzer, 4000);
     delay(500);
     noTone(buzzer);
+
+    if( digitalRead(btnA) == LOW && digitalRead(btnB) == LOW ) {
+      for (int i = 0; i < 15; i++) {
+        digitalWrite(ledA, HIGH);
+        digitalWrite(ledB, HIGH);
+        tone(buzzer, 3000);
+        delay(100);
+        digitalWrite(ledA, LOW);
+        digitalWrite(ledB, LOW);
+        noTone(buzzer);
+        delay(100);
+      }
+      while( digitalRead(btnA) == LOW || digitalRead(btnB) == LOW ) {}
+      asm("jmp 0x0000"); // not an actual reset, but kind of...
+    }
   }
 }
 
